@@ -31,8 +31,8 @@ class VCalendarExporter {
     if (ev == null) {
       return null;
     }
-    final startDate = ev.start ?? DateTime.now();
-    final endDate = ev.end ??
+    final startDate = ev.start?.toLocal() ?? DateTime.now();
+    final endDate = ev.end?.toLocal() ??
         startDate.add(ev.duration?.toDuration() ?? Duration(hours: 1));
     //final iosParams =  add.IOSParams(reminder: )
 
