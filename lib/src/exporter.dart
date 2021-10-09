@@ -45,8 +45,8 @@ class VCalendarExporter {
     });
     final add2ModelEvent = add.Event(
       title: ev.summary ?? '',
-      description: ev.description ?? '',
-      location: ev.location ?? '',
+      description: _getDescription(ev),
+      location: _getLocation(ev),
       startDate: startDate,
       endDate: endDate,
       recurrence: _toRecurrence(ev.recurrenceRule),
@@ -55,6 +55,26 @@ class VCalendarExporter {
       //iosParams: iosParams,
     );
     return add2ModelEvent;
+  }
+
+  static String _getDescription(VEvent event) {
+    final description = event.description;
+    if (description != null) {
+      return description.replaceAll('<', ' ').replaceAll('>', ' ');
+    }
+    return '';
+  }
+
+  static String _getLocation(VEvent event) {
+    final location = event.location;
+    final microsoftTeamsMeetingUrl = event.microsoftTeamsMeetingUrl;
+    if (microsoftTeamsMeetingUrl != null) {
+      if (location == null) {
+        return microsoftTeamsMeetingUrl;
+      }
+      return '$location: $microsoftTeamsMeetingUrl';
+    }
+    return location ?? '';
   }
 
   static add.Recurrence? _toRecurrence(Recurrence? recurrence) {
