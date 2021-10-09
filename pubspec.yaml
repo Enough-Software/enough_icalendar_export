@@ -1,6 +1,6 @@
 name: enough_icalendar_export
 description: Exports calendar events to the native calendar.
-version: 0.2.0
+version: 0.3.0
 homepage: https://github.com/Enough-Software/enough_icalendar_export
 
 environment:
@@ -10,10 +10,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  add_2_calendar: ^2.1.0
-  enough_icalendar: #^0.7.0
-    git:
-      url: https://github.com/Enough-Software/enough_icalendar.git
+  add_2_calendar: ^2.1.2
+  enough_icalendar: ^0.11.0
+    # git:
+    #   url: https://github.com/Enough-Software/enough_icalendar.git
     # path: ../enough_icalendar
     
 dev_dependencies:
