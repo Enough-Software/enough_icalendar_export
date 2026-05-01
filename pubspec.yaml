@@ -10,17 +10,17 @@ topics:
  - rfc5546
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.27.0"
+  sdk: ">=3.11.0 <4.0.0"
+  flutter: ">=3.41.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  add_2_calendar: ^3.0.1
-  enough_icalendar: ^0.17.0
-    # git:
-    #   url: https://github.com/Enough-Software/enough_icalendar.git
-    # path: ../enough_icalendar
+  add_2_calendar_plus: ^1.0.0
+  enough_icalendar: #^0.17.0
+      git:
+        url: https://github.com/Enough-Software/enough_icalendar.git
+#  path: ../enough_icalendar
     
 dev_dependencies:
   flutter_test:

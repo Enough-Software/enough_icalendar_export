@@ -1,11 +1,11 @@
-import 'package:add_2_calendar/add_2_calendar.dart' as add;
+import 'package:add_2_calendar_plus/add_2_calendar_plus.dart' as add;
 import 'package:enough_icalendar/enough_icalendar.dart';
 
 /// Extends [VCalendar] with the [exportToNativeCalendar] method.
 extension AddExtension on VCalendar {
   /// Exports this calendar to the native calendar.
   ///
-  /// Returns `true` when adding succeeeded.
+  /// Returns `true` when adding succeeded.
   Future<bool> exportToNativeCalendar() => VCalendarExporter.export(this);
 }
 
@@ -15,13 +15,15 @@ class VCalendarExporter {
 
   /// Exports this calendar to the native calendar.
   ///
-  /// Returns `true` when adding succeeeded.
-  static Future<bool> export(VCalendar calendar) {
+  /// Returns `true` when adding succeeded.
+  static Future<bool> export(VCalendar calendar) async {
     final add2ModelEvent = _toEvent(calendar);
     if (add2ModelEvent == null) {
       return Future.value(false);
     }
-    return add.Add2Calendar.addEvent2Cal(add2ModelEvent);
+    final result = await add.Add2Calendar.addEvent2Cal(add2ModelEvent);
+
+    return result?.id != null;
   }
 
   static add.Event? _toEvent(VCalendar calendar) {
@@ -30,7 +32,8 @@ class VCalendarExporter {
       return null;
     }
     final startDate = ev.start?.toLocal() ?? DateTime.now();
-    final endDate = ev.end?.toLocal() ??
+    final endDate =
+        ev.end?.toLocal() ??
         startDate.add(ev.duration?.toDuration() ?? const Duration(hours: 1));
     //final iosParams =  add.IOSParams(reminder: )
 
@@ -49,7 +52,8 @@ class VCalendarExporter {
       endDate: endDate,
       recurrence: _toRecurrence(ev.recurrenceRule),
       androidParams: add.AndroidParams(
-          emailInvites: attendees.isNotEmpty ? attendees : null),
+        emailInvites: attendees.isNotEmpty ? attendees : null,
+      ),
       //iosParams: iosParams,
     );
     return add2ModelEvent;
@@ -101,9 +105,10 @@ class VCalendarExporter {
         break;
     }
     return add.Recurrence(
-        frequency: freq,
-        interval: recurrence.interval,
-        ocurrences: recurrence.count,
-        rRule: recurrence.toString());
+      frequency: freq,
+      interval: recurrence.interval,
+      ocurrences: recurrence.count,
+      rRule: recurrence.toString(),
+    );
   }
 }
